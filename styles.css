@@ -1,0 +1,72 @@
+
+:root {
+    --primary-color:#285D95;
+    --secondary-color: #939393;
+  }
+
+#register-form{
+    max-width: 750px;
+    min-height: 90vh;
+}
+
+#personalData{
+    display: none;
+}
+.ialogo {
+    max-height: 125px;
+}
+
+.name-section{
+    font-size: 16px;
+}
+
+
+.progress{
+  
+   height: 5px;
+   
+}
+
+
+
+.name-section{
+    color: var(--primary-color);
+    font-weight: bold;
+}
+.name-input{ 
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: bold;
+}
+.description-section{
+    color: var(--secondary-color);
+    font-size: 14px;
+}
+
+
+
+.btn-primary{
+    background-color: var(--primary-color);
+}
+
+
+fieldset:not(.active) {
+    display: none !important;
+    
+}
+
+
+.has-error{
+    
+}
+
+.has-sucess{
+    
+}
+
+  /*Form validation rules*/
+  /* .help-block{ 
+
+  }
+   */
+  
