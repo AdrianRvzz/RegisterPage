@@ -5,7 +5,7 @@
   }
 
 #register-form{
-    max-width: 750px;
+    max-width: 600px;
     min-height: 90vh;
 }
 
@@ -28,7 +28,10 @@
 }
 
 
-
+.form-title{
+    color: var(--primary-color);
+    font-weight: bold;
+}
 .name-section{
     color: var(--primary-color);
     font-weight: bold;
@@ -49,9 +52,8 @@
     background-color: var(--primary-color);
 }
 
-
 fieldset:not(.active) {
-    display: none !important;
+   display: none !important; 
     
 }
 

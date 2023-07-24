@@ -20,6 +20,7 @@
 
       <div class="col-12 mb-4">
         <div class="row d-flex align-items-center">
+          
           <span class="description-section step-counter">Paso 1 de 4</span>
 
           <div class="col-sm-12 d-flex align-items-center gap-2 mb-3">
@@ -30,6 +31,7 @@
 
             <span class="progress-percentage description-section" style="text-align: right">0%</span>
           </div>
+          
           <div class="col-sm-12">
             <h1 class="name-section">Datos personales</h1>
             <span class="description-section">Introduce aqui tus datos personales</span>
@@ -48,15 +50,15 @@
           </div>
 
           <div class="col-12 col-sm-6">
-            <input type="text" name="surname" class="form-control" id="surname" />
+            <input type="text" name="last_name" class="form-control" id="last_name" />
 
-            <label for="surname" class="form-text">Apellido paterno <span style="color: red">*</span></label>
+            <label for="last_name" class="form-text">Apellido paterno <span style="color: red">*</span></label>
           </div>
 
           <div class="col-12 col-sm-6">
-            <input type="text" name="last-surname" class="form-control" id="last-surname" />
+            <input type="text" name="second_last_name" class="form-control" id="second_last_name" />
 
-            <label for="last-surname" class="form-text">Apellido materno (obligatorio si eres mexicano)</label>
+            <label for="second_last_name" class="form-text">Apellido materno (obligatorio si eres mexicano)</label>
           </div>
         </div>
       </div>
@@ -146,7 +148,7 @@
 
           <select class="form-select" aria-label="Selecciona la ciudad de nacimiento" name="city_birth" id="city_birth">
             <option value="" selected disabled>
-              Selecciona la ciudad 
+              Selecciona la ciudad de nacimiento
             </option>
             <option value="man">Ciudades</option>
             <option value="woman">...</option>
@@ -172,7 +174,8 @@
 
       <div class="col-12 mb-4">
         <div class="row d-flex align-items-center m,b">
-          <span class="description-section step-counter">Paso 1 de 4</span>
+          <span class="description-section step-counter">Paso 1 de 4 </span>
+          
 
           <div class="col-sm-12 d-flex align-items-center gap-2">
             <div class="col progress" role="progressbar" aria-label="Basic example" aria-valuenow="100"
@@ -196,8 +199,8 @@
         </h2>
 
         <div class="row">
-          <div class="col-12 mb-2">
-            <input type="file" accept="application/pdf" class="form-control" id="personal_document_file"
+          <div class="col-12 mb-2"> 
+            <input type="file" accept="application/pdf" class="form-control " id="personal_document_file"
               name="personal_document_file" />
 
             <label for="personal-document-file" class="form-text">Formatos permitidos (.pdf)
@@ -205,6 +208,12 @@
           </div>
         </div>
       </div>
+
+      <div id="loader-section" class="align-items-center " style="display: none">
+        <strong class="name-input">Validando su identidad...</strong>
+        <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+      </div>
+
 
       <div class="col-12 my-5 d-flex justify-content-between">
         <button type="button" class="btn btn-secondary previous">
@@ -248,7 +257,7 @@
         <div class="row">
           <div class="col-12 mb-2">
             <input type="password" class="form-control" name="password" id="password" />
-
+     
             <label for="password" class="form-text">Tu contraseña debe contener 1 mayúscula, 1 carácter especial, 1
               dígito, minúsculas y una longitud minima de 8 caracteres
             </label>
@@ -274,8 +283,8 @@
       <div class="col-12 d-flex gap-3">
         <input class="form-check-input" type="checkbox" value="accept_terms" id="accept_terms" name="accept_terms" />
         <label class="form-check-label description-section" for="accept_terms" style="float: left">
-          Si leí el Aviso de Privacidad y de la protección de mis datos
-          personales
+          Si leí el aviso de privacidad y la protección de mis datos
+          personales de
           <a href="https://www.inadet.com.mx/wp-content/uploads/2020/07/AVISO_PRIVACIDAD-inadet.pdf">Inadel</a>
           e <a href="https://www.ia.center/aviso-de-privacidad/">IA Center</a>
         </label>
