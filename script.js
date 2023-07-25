@@ -67,7 +67,7 @@ $(document).ready(function () {
   form = $("#register-form");
   form.validate({
     rules: {
-      name: "required",
+      first_name: "required",
       last_name: "required",
       genre: "required",
       date_birth: "required",
@@ -91,7 +91,7 @@ $(document).ready(function () {
    
 
     messages: {
-      name: "Por favor introduce tu nombre(s)",
+      first_name: "Por favor introduce tu nombre(s)",
       last_name: "Por favor introduce tu apellido paterno",
       genre: "Por favor elige un género",
       date_birth: "Por favor, introduce tu fecha de nacimiento",
@@ -168,7 +168,7 @@ function setSteps(indexOfCurrentField) {
 
 
 function getCurpFromInputs(){
-    let name = $("#name").val();
+    let first_name = $("#first_name").val();
     last_name = $("#last_name").val();
     second_last_name = $("#second_last_name").val();
     genre = $("#genre").val();
@@ -183,7 +183,7 @@ function getCurpFromInputs(){
     curp = last_name[0].toUpperCase();
     curp += last_name.match(/[aeiouáéíóúAEIOUÁÉÍÓÚ]/i).toString().toUpperCase();
     curp += second_last_name[0].toUpperCase();
-    curp += name[0].toUpperCase();
+    curp += first_name[0].toUpperCase();
     curp += yearOfBirth;
     curp += monthOfBirth;
     curp += dayOfBirth;
