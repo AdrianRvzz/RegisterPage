@@ -1,43 +1,49 @@
-let formFields = $("fieldset");
-
-let activeForm = $("active");
+let formFields = $("fieldset").toArray();
 
 function currentField(formFields) {
-  for (let index = 0; index < formFields.length; index++) {
-    if ($(formFields[index]).hasClass("active")) {
-      return index;
-    }
-  }
+  return formFields.findIndex((field) => $(field).hasClass("active"));
 }
 
-//this code is for progress bar percentage
+function setBarPercentage(barPercentage) {
+  var progressBar = $(".progress-bar");
+  var progressPercentage = $(".progress-percentage");
 
-let formProgress = 0;
-$("form input, form select").on("input", function () {
-  //if input has value and doesnt have full clase, we add percentage to the progress
-  if ($(this).val() !== "" && !$(this).hasClass("full")) {
-    formProgress += 1 / $('form input[value!=""], form select').length;
-    $(this).addClass("full");
-    setBarPercentage(Math.floor(formProgress * 100));
-  }
-  //else, input is empty, we substract his value in percentage
-  //if it is a checkbox and was putted in false, we substract his value
-  else if ($(this).val() == "" || ($(this).attr("type") == "checkbox" && $(this).prop("checked") == false)) {
-    formProgress -= 1 / $('form input[value!=""], form select').length;
-    $(this).removeClass("full");
-    setBarPercentage(Math.floor(formProgress * 100));
-  }
+  progressBar.stop().css("width", barPercentage + "%");
 
-  
-});
+  progressPercentage.stop().animate({ opacity: 0 }, 150, function () {
+    $(this)
+      .html(barPercentage + "%")
+      .animate({ opacity: 1 }, 300);
+  });
+}
+
+function setSteps(indexOfCurrentField) {
+  let numberSteps = formFields.length;
+  let currentStep = indexOfCurrentField;
+  $(".step-counter").html("Paso " + (currentStep + 1) + " de " + numberSteps);
+}
+
+//New progress bar function
+
+function updateProgressBar() {
+  var totalInputs = $(".input-to-fill").length;
+  var successInputs = $(".has-success.input-to-fill").length;
+  var successPercentage = (successInputs / totalInputs) * 100;
+  setBarPercentage(Math.floor(successPercentage));
+}
+
+//------------------------------------
 
 //Form validation
 $.validator.setDefaults({
   submitHandler: function () {
-    alert("submitted!");
+    console.log("submitted!");
+    createAccount();
   },
 });
 
+
+//JQuery validation plugin new methods
 jQuery.validator.addMethod(
   "password_validation",
   function (value, element) {
@@ -45,23 +51,76 @@ jQuery.validator.addMethod(
   },
   "Password error"
 );
-function validatePassword(pass) {
+$("#password").on("change",function(){
+
+})
+$("#password").on("input",function(){
+  
   let mayus = new RegExp("^(?=.*[A-Z])");
   let special = new RegExp("^(?=.*[!@#$%&*])");
   let numbers = new RegExp("^(?=.*[0-9])");
   let lower = new RegExp("^(?=.*[a-z])");
 
-  let regExp = [mayus, special, numbers, lower];
-
-  if (pass.length < 8 || pass.length > 20) return false;
-
-  for (var i = 0; i < 4; i++) {
-    if (!regExp[i].test(pass)) {
-      return false;
-    }
+  let pass= $("#password").val()
+  
+  if(pass.length < 8 || pass.length > 20){
+    $(".length").parent().removeClass("text-success").addClass("text-danger")
+    $(".length").html("circle")
+  }else{
+    $(".length").parent().removeClass("text-danger").addClass("text-success")
+    $(".length").html("check_circle")
   }
-  return true;
+
+  if(!mayus.test(pass) || !lower.test(pass)){
+    $(".upperAndLower").parent().removeClass("text-success").addClass("text-danger")
+    $(".upperAndLower").html("circle")
+
+  }else{
+    $(".upperAndLower").parent().removeClass("text-danger").addClass("text-success")
+    $(".upperAndLower").html("check_circle")
+  }
+
+  if(!special.test(pass) && !numbers.test(pass)){
+    $(".numberAndSpecial").parent().removeClass("text-success").addClass("text-danger")
+    $(".numberAndSpecial").html("circle")
+  }else{
+    $(".numberAndSpecial").parent().removeClass("text-danger").addClass("text-success")
+    $(".numberAndSpecial").html("check_circle")
+  }
+
+})
+
+
+function validatePassword(pass) {
+  let regExp = new RegExp("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&*0-9]).{8,20}$");
+  return regExp.test(pass);
 }
+
+let passShowed=false
+$(".hint-password").on("click", function(e){
+  e.preventDefault()
+  
+    if(!passShowed){
+      $(this).html("visibility_off")
+      passShowed=true
+      $("#password").prop("type", "text")
+    }
+    else{$(this).html("visibility")
+    $("#password").prop("type", "password")
+    passShowed=false
+    }
+  })
+
+
+jQuery.validator.addMethod(
+  "check_required",
+  function (value, element) {
+    return element.checked;
+  },
+  "Por favor, acepta nuestras políticas"
+);
+
+
 
 $(document).ready(function () {
   form = $("#register-form");
@@ -69,13 +128,12 @@ $(document).ready(function () {
     rules: {
       first_name: "required",
       last_name: "required",
-      genre: "required",
+      gender: "required",
       date_birth: "required",
       country_birth: "required",
       state_birth: "required",
       city_birth: "required",
       personal_document_file: "required",
-
       password: {
         required: true,
         password_validation: true,
@@ -86,14 +144,13 @@ $(document).ready(function () {
         minlength: 8,
         equalTo: "#password",
       },
-      accept_terms: "required",
+      accept_terms: "check_required",
     },
-   
 
     messages: {
       first_name: "Por favor introduce tu nombre(s)",
       last_name: "Por favor introduce tu apellido paterno",
-      genre: "Por favor elige un género",
+      gender: "Por favor elige un género",
       date_birth: "Por favor, introduce tu fecha de nacimiento",
       country_birth: "Por favor, introduce tu país de nacimiento",
       state_birth: "Por favor, introduce tu estado de nacimiento",
@@ -115,123 +172,265 @@ $(document).ready(function () {
       error.addClass("help-block");
     },
 
-    sucess: function (label, element) {
-       
-    },
+    sucess: function (label, element) {},
 
     highlight: function (element, errorClass, validClass) {
-      $(element).addClass("has-error border-danger").removeClass("has-sucess border-success");
+      $(element).addClass("has-error border-danger").removeClass("has-success border-success");
       $(element).next().addClass("text-danger");
-      
-
+      updateProgressBar();
     },
     unhighlight: function (element, errorClass, validClass) {
-      $(element).addClass("has-sucess border-success").removeClass("has-error border-danger");
+      $(element).addClass("has-success border-success").removeClass("has-error border-danger");
       $(element).next().removeClass("text-danger");
-    
-     
-     
+      updateProgressBar();
     },
   });
 
+  $("#first_name").val("Adrian");
+  $("#last_name").val("Rivas");
+  $("#second_last_name").val("Escarcega");
+  $("#gender").val("H");
+  $("#date_birth").val("2003-01-08");
+  // $("#country_birth").val("Mexico");
+  // $("#state_birth").val("Chihuahua");
+  // $("#city_birth").val("Casas Grandes");
+  $("#personal_document_file").val("file.pdf");
+  $("#password").val("mypassword");
+  $("#repeat_password").val("mypassword");
+});
 
-  //fill inputs for testing
-//   $("#name").val("Adrian");
-//   $("#last_name").val("Rivas");
-//   $("#second_last_name").val("Escarcega");
-//   $("#genre").val("man");
-//   $("#date_birth").val("2003-01-08");
-  
+//Handle progress bar in check of accept_terms
+
+$("#accept_terms").on("click", function () {
+  $("#accept_terms").toggleClass("has-success");
+  updateProgressBar();
+});
+
+//---------------------------------------------
+
+
+//Functions of modals
+function showModal(modal, message) {
+  let currentModal = $("#" + modal);
+  currentModal.modal("show");
+  if (animationSuccessCompleted && modal == "myModal-success") {
+    animationSuccess.goToAndPlay(0, true);
+    animationSuccessCompleted = false;
+  }
+  if (animationFailCompleted && modal == "myModal-fail") {
+    animationFail.goToAndPlay(0, true);
+    animationFailCompleted = false;
+    $(".myModal-fail-description").html(message);
+  }
+}
+
+function hideModal(modal) {
+  $("#" + modal).modal("hide");
+}
+
+$("#close-modal").on("click", function () {
+  $("#myModal-fail").modal("hide");
+});
+
+
+//---------------------------------------------
+//          Creating Animation Objects for Modals
+//---------------------------------------------
+// Elements of success animation completed
+let containerAnimationSuccess = document.getElementById("animation-success");
+let animationSuccess;
+let animationSuccessCompleted = true;
+
+animationSuccess = lottie.loadAnimation({
+  container: containerAnimationSuccess,
+  rendered: "svg",
+  loop: false,
+  autoplay: false,
+  path: "https://lottie.host/b0537f55-d7f1-4f70-b3a8-ecde7b3516f2/CpcfdamGzH.json",
+});
+
+animationSuccess.addEventListener("complete", () => {
+  animationSuccessCompleted = true;
+});
+
+// Elements of fail animation completed
+let containerAnimationFail = document.getElementById("animation-fail");
+let animationFail;
+let animationFailCompleted = true;
+
+animationFail = lottie.loadAnimation({
+  container: containerAnimationFail,
+  rendered: "svg",
+  loop: false,
+  autoplay: false,
+  path: "https://lottie.host/0eb93c21-a905-4aa0-98b1-d8f764839c7d/KbreszfEZs.json",
+});
+
+animationFail.addEventListener("complete", () => {
+  animationFailCompleted = true;
+});
+
+// Elements of loading animation
+let containerAnimationLoading = document.getElementById("animation-loading");
+let animationLoading;
+
+animationLoading = lottie.loadAnimation({
+  container: containerAnimationLoading,
+  rendered: "svg",
+  loop: true,
+  autoplay: true,
+  path: "https://lottie.host/a1f44ad1-596a-4bec-ba69-b860ccff6d44/kS7dEee7IU.json",
+});
+//---------------------------------------------
 
 
 
+
+
+
+
+//Event to change form when the user was not born in mexico it change select to
+//inputs, and allows the state input
+
+
+function toggleInputs(previousInput, newInput){
+  previousInput.hide().prop("disabled", true).val("").removeClass("has-success input-to-fill has-error")
+  newInput.show().prop("disabled", false).addClass("input-to-fill")
+}
+
+$("#country_birth").on("input", function () {
+  $("#personal_document_file").val("");
+  $("#document-alert").remove();
+  var countrySelected = $(this).val();
+  if (countrySelected != "MX") {
+
+    toggleInputs($("#state_birth"), $("#state_birth_txt"))
+    toggleInputs($("#city_birth"), $("#city_birth_txt"))
+
+    $("#personal-document h2").html(`<h2 class="name-input mb-3">Identificación</h2>`);
+    
+   
+    $("#second_last_name").val("").parent().hide();
+    } else {
+
+    toggleInputs($("#state_birth_txt"), $("#state_birth"))
+    toggleInputs($("#city_birth_txt"), $("#city_birth"))
+    
+    $("#personal-document h2").html(
+      `<h2 class="name-input mb-3">CURP<a class="" href="https://www.gob.mx/curp/" target="_blank">(descárgala aquí)</a></h2>`
+    );
+    $("#second_last_name").parent().show();
+  }
+  $("#city_birth_txt, #city_birth").prop("disabled", true)
+  updateProgressBar();
+});
+
+$("#state_birth").on("input", function () {
+  console.log("Calling AJAX");
+  getCitiesFromState($(this).val());
+});
+
+$("#state_birth_txt").on("input", function () {
+  if ($(this).val() != "") {
+    $("#city_birth_txt").prop("disabled", false);
+  } else {
+    $("#city_birth_txt").prop("disabled", true);
+  }
 });
 
 
 
 
-function setBarPercentage(barPercentage) {
-  $(".progress-bar").css("width", barPercentage + "%");
-  $(".progress-percentage").animate({ opacity: 0 }, 150, function () {
-    $(this)
-      .html(barPercentage + "%")
-      .animate({ opacity: 1 }, 300);
-  });
-}
-
-function setSteps(indexOfCurrentField) {
-  let numberSteps = formFields.length;
-  let currentStep = indexOfCurrentField;
-  $(".step-counter").html("Paso " + (currentStep + 1) + " de " + numberSteps);
-}
-
-
-
-function getCurpFromInputs(){
-    let first_name = $("#first_name").val();
-    last_name = $("#last_name").val();
-    second_last_name = $("#second_last_name").val();
-    genre = $("#genre").val();
-
-    birth = new Date($("#date_birth").val());
+function getDataFromInputs() {
+  try {
+    const birth = new Date($("#date_birth").val());
     birth.setDate(birth.getDate() + 1);
-   
-    const dayOfBirth = ("0" + birth.getDate()).slice(-2);
-    const monthOfBirth = ("0" + (birth.getMonth() + 1)).slice(-2);
-    const yearOfBirth = birth.getFullYear().toString().slice(-2);
-    //console.log(first_name + last_name + second_last_name + "birth: " + birth);
-    curp = last_name[0].toUpperCase();
-    curp += last_name.match(/[aeiouáéíóúAEIOUÁÉÍÓÚ]/i).toString().toUpperCase();
-    curp += second_last_name[0].toUpperCase();
-    curp += first_name[0].toUpperCase();
-    curp += yearOfBirth;
-    curp += monthOfBirth;
-    curp += dayOfBirth;
-    if (genre === "man") {
-      curp += "H";
-    } else if(genre ==="woman") {
-      curp += "M";
+    if (isNaN(birth)) {
+      throw new Error("Invalid date of birth");
     }
-    else{
-      curp+="X"
-    }
-    
 
-    console.log(curp);
+    const personalData = {
+      first_name: $("#first_name").val().normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
+      last_name: $("#last_name").val().normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
+      gender: $("#gender").val(),
+      day_birth: ("0" + birth.getDate()).slice(-2),
+      month_birth: ("0" + (birth.getMonth() + 1)).slice(-2),
+      year_birth: birth.getFullYear().toString(),
+      country_birth: $("#country_birth").val(),
+      state_birth: $("#state_birth").val(),
+    };
+
+    console.log(personalData);
+
+    return personalData;
+  } catch (error) {
+    console.error("Error:", error.message);
+
+    return null; // Return null or a default value if an error occurs
+  }
 }
 
-$("#personal_document_file ").change(function () {
-  console.log("File selected");
-  $("#personal-document .previous, #personal-document .next").prop(
-    "disabled",
-    true
-  );
+//Ajax request to get CURP data from document.file
+let curp = undefined;
+$("#personal_document_file").on("change", function () {
+  
+  personalData = getDataFromInputs();
+  let formFile = new FormData();
+  formFile.append("csrfmiddlewaretoken", $("#csrftoken").val());
+
+  // Append the personalData to the FormData object
+  for (const key in personalData) {
+    formFile.append(key, personalData[key]);
+  }
+
+  formFile.append("file", personal_document_file.files[0]);
+
+  $("#document-alert").remove();
+  $("#personal-document .previous, #personal-document .next").prop("disabled", true);
   $("#loader-section").css("display", "flex");
 
   let curpPromise = new Promise((resolve, reject) => {
-    //call the curp api
-    setTimeout(function () {
-        
-      getCurpFromInputs()
-
-      resolve(curp);
-    }, 1500);
+    $.ajax({
+      type: "POST",
+      url: "/ajax/curp/",
+      data: formFile,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        console.log("Exito:", response);
+        resolve(response);
+      },
+      error: function (xhr, status, error) {
+        let errorResponse = JSON.parse(xhr.responseText);
+        reject(errorResponse.Error);
+      },
+    });
   });
 
   curpPromise
-    .then((curp) => {
-      $("#personal-document .previous, #personal-document .next").prop(
-        "disabled",
-        false
-      );
+    .then((message) => {
+      $("#personal-document .previous, #personal-document .next").prop("disabled", false);
       $("#loader-section").css("display", "none");
+      $("#document-alert").remove();
+      $("#loader-section").after(`<div id="document-alert" class="alert alert-success alert-dismissible p-2  fade show" role="alert">
+    ${message.Okay}</div>`);
+      curp = message.Okay;
     })
     .catch((err) => {
-      console.log(err);
+      
+      $("#document-alert").remove();
+      $("#loader-section").after(`<div id="document-alert" class="alert alert-danger alert-dismissible p-2 fade show" role="alert">
+      ${err}</div>`);
+      $("#personal-document .previous").prop("disabled", false);
+      $("#loader-section").css("display", "none");
+      $("#personal_document_file").val("");
     });
 });
 
-$(".previous").click(function () {
+
+
+
+$(".previous").on("click", function () {
   indexOfCurrentField = currentField(formFields);
   setSteps(indexOfCurrentField - 1);
 
@@ -253,7 +452,9 @@ $(".previous").click(function () {
   );
 });
 
-$(".next").click(function () {
+
+
+$(".next").on("click", function () {
   if (form.valid()) {
     indexOfCurrentField = currentField(formFields);
     setSteps(indexOfCurrentField + 1);
@@ -277,3 +478,80 @@ $(".next").click(function () {
     );
   }
 });
+
+//AJAX request to get city from state
+
+function getCitiesFromState(entity_code) {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      type: "POST",
+      url: "/ajax/cities/",
+      data: {
+        entity_code: entity_code,
+      },
+      success: function (response) {
+        $("#city_birth").prop("disabled", false);
+        $("#city_birth").empty(); // Clear existing options before populating new ones
+
+        $("#city_birth").append(`<option value="" selected disabled >Selecciona la ciudad</option>`);
+        // Loop through each city in the JSON response
+        for (const city of response.cities) {
+          // Append a new option element to the dropdown for each city
+          $("#city_birth").append(`<option value="${city.city_code}">${city.name}</option>`);
+        }
+      },
+      error: function (error) {
+        $("#city_birth").css("display", "none");
+        $("#city_birth_txt").css("display", "block");
+        reject(console.log("No se recibieron las ciudades"));
+      },
+    });
+  });
+}
+
+//Ajax request to create an account
+
+function createAccount() {
+  let formAccount = new FormData($("#register-form")[0]);
+  formAccount.append("curp", curp);
+  formAccount.append("csrfmiddlewaretoken", $("#csrftoken").val());
+
+  showModal("myModal-loading");
+
+  let newAccount = new Promise((resolve, reject) => {
+    $.ajax({
+      type: "POST",
+      url: "/ajax/create_account/",
+      data: formAccount,
+      processData: false,
+      contentType: false,
+
+      success: function (response) {
+        console.log("Exito", response);
+        resolve(Response);
+      },
+      error: function (xhr, status, error) {
+        let errorResponse = JSON.parse(xhr.responseText);
+        reject(errorResponse.Error);
+      },
+    });
+  });
+
+  newAccount
+    .then((message) => {
+      hideModal("myModal-loading");
+      showModal("myModal-success");
+
+      //alert(message.Okay)
+    })
+    .catch((err) => {
+      hideModal("myModal-loading");
+      showModal("myModal-fail", err);
+      console.log(err);
+      //alert(err)
+    });
+}
+
+//Ajax send form information
+
+//Animations

@@ -1,23 +1,35 @@
-
+* {
+    
+}
+html{
+    font-size: 16px;
+}
 :root {
     --primary-color:#285D95;
     --secondary-color: #939393;
   }
 
+
+  body{
+    /* background-image: url("../../images/iaplatform/bg2.png"); */
+    background-color: #212429 ;
+  }
 #register-form{
     max-width: 600px;
-    min-height: 90vh;
+    /* min-height: 90vh; */
+    background-color: #fff;
+
 }
 
 #personalData{
     display: none;
 }
 .ialogo {
-    max-height: 125px;
+    max-height: 75px;
 }
 
 .name-section{
-    font-size: 16px;
+    /* font-size: 16px; */
 }
 
 
@@ -38,25 +50,74 @@
 }
 .name-input{ 
     color: var(--primary-color);
-    font-size: 14px;
+    /* font-size: 14px; */
     font-weight: bold;
 }
 .description-section{
     color: var(--secondary-color);
-    font-size: 14px;
+    /* font-size: 14px; */
 }
+.hint-password{
+    color: var(--primary-color);
+    cursor: pointer;
+    user-select: none;
+}
+.req-password{
 
-
+}
+.req-password li {
+    display: flex;
+    align-items: center;
+    color: var(--secondary-color);
+    gap: 0.25rem;
+}
+.req-password ul li i {
+    font-size: 1rem;
+}
+.password-not-completed{
+    color: #;
+}
 
 .btn-primary{
     background-color: var(--primary-color);
 }
 
+#register-form{
+    /* display: none !important; */
+}
 fieldset:not(.active) {
-   display: none !important; 
+  display: none !important;     */
     
 }
 
+
+#myModal-loading .modal-content{
+    width: 100px;
+
+}
+
+
+.modal-header{
+    
+   
+}
+.animation-sucess{
+    max-width: 600px;
+}
+
+.modal-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
 
 /* .has-error{
     
@@ -71,4 +132,72 @@ fieldset:not(.active) {
 
   }
    */
+h1{
+    font-size: 1rem;
+    font-weight: bold;
+}
+h2, span, input, button{
+    font-size: 0.88rem;
+
+}
+/* span{
+    font-size: 1rem;
+
+}
+input{
+    font-size: 1rem;
+
+}
+label{
+
+}
+button{
+
+} */
   
+@media (min-width: 576px) { 
+    html {
+        font-size: 16.5px;
+    }
+    .ialogo{
+        max-height: 87.5px;
+    } 
+}
+
+
+@media (min-width: 768px) {  
+    html {
+        font-size: 17px;
+    
+    }
+    .ialogo{
+        max-height: 100px;
+    }  
+}
+
+
+@media (min-width: 992px) { 
+    html {
+      font-size: 17.5px;
+    }
+    .ialogo{
+        max-height: 112.5px;
+    }  
+ }
+
+
+@media (min-width: 1200px) { 
+    html {
+         font-size: 18px; 
+    }
+    .ialogo {
+        max-height: 125px; 
+   }
+ }
+
+
+@media (min-width: 1400px) { 
+    html {
+        /* font-size: 20px; */
+    }
+ }

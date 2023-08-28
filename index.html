@@ -1,314 +1,448 @@
-<!DOCTYPE html>
-<html lang="en">
+<%namespace name='static' file='../../static_content.html' />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Registrate ya en IA Center</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="styles.css" />
-</head>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Regístrate ya en IA Center!</title>
+        <link rel="shortcut icon" type="image/png" href="${static.url('images/iaplatform/logo/favicon.png')}" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet" />
+        <link rel="stylesheet" href="${static.url('css/iaplatform/create_account_page.css')}" />
+        
+        
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
-<body class="d-flex align-items-center justify-content-center">
-  <form action="" id="register-form" method="post" novalidate="novalidate" class="container w-100 p-4 px-5">
-    <fieldset id="personal-data" class="active">
-      <div class="col-12 mb-1 text-center">
-        <img class="ialogo img-fluid" src="iaplatform/logo/logo.png" alt="" />
-      </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.14/lottie.min.js"></script>
+    </head>
 
-      <div class="col-12 mb-4">
-        <div class="row d-flex align-items-center">
-          
-          <span class="description-section step-counter">Paso 1 de 4</span>
+    <body class="d-flex align-items-center justify-content-center">
+        <input id="csrftoken" name="csrfmiddlewaretoken" type="hidden" value="${str(csrftoken)}" />
+        <form action="" id="register-form" method="post" novalidate="novalidate" class="container w-100 p-4 px-sm-5 rounded-1">
+            <fieldset id="personal-data" class="active">
+                <div class="col-12 mb-1 text-center">
+                    <img class="ialogo img-fluid" src="${static.url('images/iaplatform/logo/logo.png')}" alt="" />
+                </div>
 
-          <div class="col-sm-12 d-flex align-items-center gap-2 mb-3">
-            <div class="col progress" role="progressbar" aria-label="Basic example" aria-valuenow="100"
-              aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-bar" style="width: 0%"></div>
+                <div class="col-12 mb-4">
+                    <div class="row d-flex align-items-center">
+                        <span class="description-section step-counter">Paso 1 de 4</span>
+
+                        <div class="col-sm-12 d-flex align-items-center gap-2 mb-3">
+                            <div
+                                class="col progress"
+                                role="progressbar"
+                                aria-label="Basic example"
+                                aria-valuenow="100"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+
+                            <span class="progress-percentage description-section" style="text-align: right">0%</span>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <h1 class="name-section">Datos personales del estudiante</h1>
+                            <span class="description-section">Introduce tu nombre completo tal como aparece en tus documentos oficiales y selecciona tu género.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                    <h2 class="name-input mb-3">Nombre completo <span style="color: red">*</span></h2>
+
+                    <div class="row">
+                        <div class="col-12  mb-2">
+                            <input type="text" name="first_name" class="form-control input-to-fill" id="first_name" />
+
+                            <label for="first_name" class="form-text"
+                                >Nombre(s) </label
+                            >
+                        </div>
+
+                        <div class="col-12 ">
+                            <input type="text" name="last_name" class="form-control input-to-fill" id="last_name" />
+
+                            <label for="last_name" class="form-text"
+                                >Apellido(s) </label
+                            >
+                        </div>
+
+                     
+                    </div>
+                </div>
+
+                <div class="col-12  mb-4">
+                    <h2 class="name-input mb-3">Género asignado al nacimiento <span style="color: red">*</span></h2>
+
+                    <div class="mb-2 col-sm-5">
+                        <select
+                            class="form-select input-to-fill"
+                            name="gender"
+                            aria-label="Selecciona un genero"
+                            id="gender"
+                        >
+                            <option disabled selected value="">Selecciona un género </option>
+                            <option value="H">Hombre</option>
+
+                            <option value="M">Mujer</option>
+                            <option value="O">Otro</option>
+                        </select>
+
+                    
+                    </div>
+                </div>
+
+                <div class="col-12 my-1 d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary next">Siguiente</button>
+                </div>
+            </fieldset>
+
+            <fieldset id="birth-data" class=" ">
+                <div class="col-12 mb-1 text-center">
+                    <img class="ialogo img-fluid" src="${static.url('images/iaplatform/logo/logo.png')}" alt="" />
+                </div>
+
+                <div class="col-12 mb-4">
+                    <div class="row d-flex align-items-center m,b">
+                        <span class="description-section step-counter">Paso 2 de 4</span>
+
+                        <div class="col-sm-12 d-flex align-items-center gap-2">
+                            <div
+                                class="col progress"
+                                role="progressbar"
+                                aria-label="Basic example"
+                                aria-valuenow="100"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                <div class="progress-bar"></div>
+                            </div>
+
+                            <span class="progress-percentage description-section" style="text-align: right">0%</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <h1 class="name-section">Datos de nacimiento del estudiante</h1>
+                            <span class="description-section"
+                                >Ingrese su fecha y lugar de nacimiento.</span
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12  mb-4">
+                    <h2 class="name-input mb-3">Fecha de nacimiento <span style="color: red">*</span></h2>
+
+                    <div class="col-12 col-sm-5 mb-2">
+                        <input type="date" class="form-control input-to-fill" id="date_birth" name="date_birth" />
+
+                        <label for="dateBirth" class="form-text">(dd/mm/aaaa) </label>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                    <h2 class="name-input mb-3">Lugar de nacimiento <span style="color: red">*</span></h2>
+
+                    <div class="col-12   mb-2">
+                        <select
+                            class="form-select input-to-fill"
+                            aria-label="Selecciona el país de nacimiento"
+                            name="country_birth"
+                            id="country_birth"
+                            autocomplete="off"
+                        >
+                            <option value="" selected disabled>Selecciona el país</option>
+                            % for country in countries:
+                            <option value="${country.iso_code}">
+                                <i class="flag flag-${country.iso_code}"></i>${country.name}
+                            </option>
+                            % endfor
+                        </select>
+
+                        <label class="form-text  mb-2 mt-0">País </label>
+
+                        <select
+                            class="form-select input-to-fill"
+                            aria-label="Selecciona el estado o departamento de nacimiento"
+                            name="state_birth"
+                            id="state_birth"
+                            disabled
+                            autocomplete="off"
+                        >
+                            <option value="" selected disabled>Selecciona el estado</option>
+                            % for state in states:
+                            <option value="${state.entity_code}">${state.name}</option>
+                            % endfor
+                        </select>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="state_birth_txt"
+                            name="state_birth"
+                            style="display: none"
+                            disabled
+                        />
+
+                        <label class="form-text  mb-2 mt-0">Estado/Departamento </label>
+
+                        <select
+                            class="form-select input-to-fill"
+                            aria-label="Selecciona la ciudad de nacimiento"
+                            name="city_birth"
+                            id="city_birth"
+                            disabled
+                            autocomplete="off"
+                        >
+                            <option value="" selected disabled>Selecciona la ciudad</option>
+                            % for city in cities:
+                            <option value="${city.city_code}">${city.name}</option>
+                            % endfor
+                        </select>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="city_birth_txt"
+                            name="city_birth"
+                            disabled
+                            style="display: none"
+                        />
+                        <label class="form-text mb-2 mt-0">Ciudad/Municipio</label>
+                    </div>
+                </div>
+
+                <div class="col-12 my-5 d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary previous">Regresar</button>
+                    <button type="button" class="btn btn-primary next">Siguiente</button>
+                </div>
+            </fieldset>
+
+            <fieldset id="personal-document" class="row flex-column d-flex align-items-center justify-content-center">
+                <div class="col-12 mb-1 text-center">
+                    <img class="ialogo img-fluid" src="${static.url('images/iaplatform/logo/logo.png')}" alt="" />
+                </div>
+
+                <div class="col-12 mb-4">
+                    <div class="row d-flex align-items-center m,b">
+                        <span class="description-section step-counter">Paso 3 de 4 </span>
+
+                        <div class="col-sm-12 d-flex align-items-center gap-2">
+                            <div
+                                class="col progress"
+                                role="progressbar"
+                                aria-label="Basic example"
+                                aria-valuenow="100"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+
+                            <span class="progress-percentage description-section" style="text-align: right">0%</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <h1 class="name-section">Documento personal <span style="color: red">*</span></h1>
+                            <span class="description-section">Suba el archivo de su documento oficial para validar la información que proporcionó</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                    <h2 class="name-input mb-3">
+                        CURP
+                        <a class="" href="https://www.gob.mx/curp/" target="_blank">(descárgala aquí)</a>
+                    </h2>
+
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <input
+                                type="file"
+                                accept="application/pdf"
+                                class="form-control input-to-fill"
+                                id="personal_document_file"
+                                name="personal_document_file"
+                            />
+
+                            <label for="personal-document-file" class="form-text"
+                                >Formatos permitidos (.pdf) </label
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div id="loader-section" class="align-items-center" style="display: none">
+                    <strong class="name-input">Validando su identidad...</strong>
+                    <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                </div>
+
+                <div class="col-12 my-5 d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary previous">Regresar</button>
+                    <button type="button" class="btn btn-primary next">Siguiente</button>
+                </div>
+            </fieldset>
+
+            <fieldset id="login-data" class="row flex-column d-flex align-items-center justify-content-center">
+                <div class="col-12 mb-1 text-center">
+                    <img class="ialogo img-fluid" src="${static.url('images/iaplatform/logo/logo.png')}" alt="" />
+                </div>
+
+                <div class="col-12 mb-4 progress-container"></div>
+
+                <div class="col-12 mb-4">
+                    <div class="row d-flex align-items-center m,b">
+                        <span class="description-section step-counter">Paso 4 de 4</span>
+
+                        <div class="col-sm-12 d-flex align-items-center gap-2">
+                            <div
+                                class="col progress"
+                                role="progressbar"
+                                aria-label="Basic example"
+                                aria-valuenow="100"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+
+                            <span class="progress-percentage description-section" style="text-align: right">0%</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <h1 class="name-section">Datos de inicio de sesión</h1>
+                            <span class="description-section">Introduce aqui una contraseña y acepta los términos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                    
+                    <h2 class="name-input mb-3">Contraseña <span style="color: red">*</span></h2>
+
+                    <div class="row">
+                        <div class="col-12 mb-2  ">
+                            <div class="position-relative d-flex align-items-center"><input type="password" class="form-control input-to-fill" name="password" id="password" />
+                                <span class="material-icons-outlined position-absolute end-0 px-2 hint-password">visibility</span></div>
+
+                            <label for="password" class="form-text req-password"
+                                >Tu contraseña debe contener:
+                                <ul class="list-unstyled  ">
+                                    <li><i class="material-icons-outlined password-not-completed length">circle</i>8-20 carácteres</li>
+                                    <li><i class="material-icons-outlined password-not-completed upperAndLower">circle</i>Mayúsculas y minúsculas</li>
+                                    <li><i class="material-icons-outlined password-not-completed numberAndSpecial">circle</i>Un número o carácter especial</li>
+                                    </ul>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex gap-3">
+                    <input
+                        class="form-check-input input-to-fill"
+                        type="checkbox"
+                        value="accept_terms"
+                        id="accept_terms"
+                        name="accept_terms"
+                    />
+                    <label class="form-check-label description-section" for="accept_terms" style="float: left">
+                        Si leí los términos de
+                        <a href="https://www.inadet.com.mx/wp-content/uploads/2020/07/AVISO_PRIVACIDAD-inadet.pdf"
+                            >Inadel</a
+                        >
+                        e <a href="https://www.ia.center/aviso-de-privacidad/">IA Center</a>
+                    </label>
+                </div>
+
+                <div class="col-12 my-5 d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary previous">Regresar</button>
+                    <button type="submit" class="btn btn-primary submit">Crear cuenta</button>
+                </div>
+            </fieldset>
+        </form>
+
+        <div id="myModal-loading" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-confirm modal-dialog-centered d-flex justify-content-center">
+                <div class="modal-content">
+                    <div id="animation-loading" class="img-fluid"></div>
+                </div>
             </div>
-
-            <span class="progress-percentage description-section" style="text-align: right">0%</span>
-          </div>
-          
-          <div class="col-sm-12">
-            <h1 class="name-section">Datos personales</h1>
-            <span class="description-section">Introduce aqui tus datos personales</span>
-          </div>
         </div>
-      </div>
 
-      <div class="col-12 mb-4">
-        <h2 class="name-input mb-3">Nombre del estudiante</h2>
-
-        <div class="row">
-          <div class="col-12 col-sm-6 mb-2">
-            <input type="text" name="first_name" class="form-control" id="first_name" />
-
-            <label for="first_name" class="form-text">Nombre(s) <span style="color: red">*</span></label>
-          </div>
-
-          <div class="col-12 col-sm-6">
-            <input type="text" name="last_name" class="form-control" id="last_name" />
-
-            <label for="last_name" class="form-text">Apellido paterno <span style="color: red">*</span></label>
-          </div>
-
-          <div class="col-12 col-sm-6">
-            <input type="text" name="second_last_name" class="form-control" id="second_last_name" />
-
-            <label for="second_last_name" class="form-text">Apellido materno (obligatorio si eres mexicano)</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-sm-8 mb-4">
-        <h2 class="name-input mb-3">Género del estudiante</h2>
-
-        <div class="mb-2">
-          <select class="form-select" name="genre" aria-label="Selecciona un genero" id="genre">
-            <option disabled selected value="">Selecciona un genero</option>
-            <option value="man">Hombre</option>
-            <option value="woman">Mujer</option>
-            <option value="other">Otro</option>
-          </select>
-
-          <label class="form-text">Género que aparece en sus documentos oficiales
-            <span style="color: red">*</span></label>
-        </div>
-      </div>
-
-      <div class="col-12 my-1 d-flex justify-content-end">
-        <button type="button" class="btn btn-primary next">Siguiente</button>
-      </div>
-    </fieldset>
-
-    <fieldset id="birth-data" class=" ">
-      <div class="col-12 mb-1 text-center">
-        <img class="ialogo img-fluid" src="iaplatform/logo/logo.png" alt="" />
-      </div>
-
-      <div class="col-12 mb-4">
-        <div class="row d-flex align-items-center m,b">
-          <span class="description-section step-counter">Paso 1 de 4</span>
-
-          <div class="col-sm-12 d-flex align-items-center gap-2">
-            <div class="col progress" role="progressbar" aria-label="Basic example" aria-valuenow="100"
-              aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-bar"></div>
+        <div id="myModal-success" class="modal fade">
+            <div class="modal-dialog modal-confirm modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="icon-box">
+                            <div id="animation-success" class="img-fluid"></div>
+                        </div>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h4>Excelente!</h4>
+                        <p>Tu cuenta ha sido creada exitosamente.</p>
+                        <button class="btn btn-success" data-dismiss="modal">
+                            <span>Vamos a aprender</span> <i class="material-icons">&#xE5C8;</i>
+                        </button>
+                    </div>
+                </div>
             </div>
-
-            <span class="progress-percentage description-section" style="text-align: right">0%</span>
-          </div>
-          <div class="col-sm-12">
-            <h1 class="name-section">Datos de nacimiento</h1>
-            <span class="description-section">Introduzca toda su información personal de cuando nació</span>
-          </div>
         </div>
-      </div>
 
-      <div class="col-12 mb-4">
-        <h2 class="name-input mb-3">Fecha de nacimiento</h2>
+        <div id="myModal-fail" class="modal fade" aria-hidden="true" aria-labelledby="" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="icon-box">
+                            <div id="animation-fail" class="img-fluid"></div>
+                        </div>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h4 class="myModal-fail-title">Algo salio mal</h4>
+                        <p class="myModal-fail-description">Ocurrió un problema creando la cuenta</p>
 
-        <div class="col-12 mb-2">
-          <input type="date" class="form-control" id="date_birth" name="date_birth" />
-
-          <label for="dateBirth" class="form-text">(dd/mm/aaaa) <span style="color: red">*</span></label>
-        </div>
-      </div>
-
-      <div class="col-12 mb-4">
-        <h2 class="name-input mb-3">Lugar de nacimiento</h2>
-
-        <div class="col-12 mb-2">
-          <select class="form-select" aria-label="Selecciona el país de nacimiento" name="country_birth"
-            id="country_birth">
-            <option value="" selected disabled>
-              Selecciona el país 
-            </option>
-            <option value="man">Paises</option>
-            <option value="woman">...</option>
-            <option value="other">...</option>
-          </select>
-
-          <label class="form-text">País <span style="color: red">*</span></label>
-
-          <select class="form-select" aria-label="Selecciona el estado o departamento de nacimiento" name="state_birth"
-            id="state_birth">
-            <option value="" selected disabled>
-              Selecciona el estado 
-            </option>
-            <option value="man">Estados</option>
-            <option value="woman">...</option>
-            <option value="other">...</option>
-          </select>
-
-          <label class="form-text">Estado/Departamento <span style="color: red">*</span></label>
-
-          <select class="form-select" aria-label="Selecciona la ciudad de nacimiento" name="city_birth" id="city_birth">
-            <option value="" selected disabled>
-              Selecciona la ciudad
-            </option>
-            <option value="man">Ciudades</option>
-            <option value="woman">...</option>
-            <option value="other">...</option>
-          </select>
-
-          <label class="form-text">Ciudad/Municipio</label><span style="color: red">*</span>
-        </div>
-      </div>
-
-      <div class="col-12 my-5 d-flex justify-content-between">
-        <button type="button" class="btn btn-secondary previous">
-          Regresar
-        </button>
-        <button type="button" class="btn btn-primary next">Siguiente</button>
-      </div>
-    </fieldset>
-
-    <fieldset id="personal-document" class="row flex-column d-flex align-items-center justify-content-center">
-      <div class="col-12 mb-1 text-center">
-        <img class="ialogo img-fluid" src="iaplatform/logo/logo.png" alt="" />
-      </div>
-
-      <div class="col-12 mb-4">
-        <div class="row d-flex align-items-center m,b">
-          <span class="description-section step-counter">Paso 1 de 4 </span>
-          
-
-          <div class="col-sm-12 d-flex align-items-center gap-2">
-            <div class="col progress" role="progressbar" aria-label="Basic example" aria-valuenow="100"
-              aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-bar" style="width: 0%"></div>
+                        <button
+                            id="close-modal"
+                            type="button"
+                            class="close btn btn-success"
+                            data-dismiss="modal"
+                            data-bd-dismiss="modal"
+                            aria-hidden="true"
+                        >
+                            <span>Cerrar</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-
-            <span class="progress-percentage description-section" style="text-align: right">0%</span>
-          </div>
-          <div class="col-sm-12">
-            <h1 class="name-section">Documento personal</h1>
-            <span class="description-section">Suba un archivo de su documento</span>
-          </div>
         </div>
-      </div>
 
-      <div class="col-12 mb-4">
-        <h2 class="name-input mb-3">
-          CURP
-          <a class="" href="https://www.gob.mx/curp/" target="_blank">(descárgala aquí)</a>
-        </h2>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"
+        ></script>
 
-        <div class="row">
-          <div class="col-12 mb-2"> 
-            <input type="file" accept="application/pdf" class="form-control " id="personal_document_file"
-              name="personal_document_file" />
+        <script
+            src="https://code.jquery.com/jquery-3.7.0.js"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+            crossorigin="anonymous"
+        ></script>
 
-            <label for="personal-document-file" class="form-text">Formatos permitidos (.pdf)
-              <span style="color: red">*</span></label>
-          </div>
-        </div>
-      </div>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+        
+        <script>
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    data: { csrfmiddlewaretoken: "${str(csrftoken)}" },
+                });
+            });
+        </script>
 
-      <div id="loader-section" class="align-items-center " style="display: none">
-        <strong class="name-input">Validando su identidad...</strong>
-        <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
-      </div>
-
-
-      <div class="col-12 my-5 d-flex justify-content-between">
-        <button type="button" class="btn btn-secondary previous">
-          Regresar
-        </button>
-        <button type="button" class="btn btn-primary next">Siguiente</button>
-      </div>
-    </fieldset>
-
-    <fieldset id="login-data" class="row flex-column d-flex align-items-center justify-content-center">
-      <div class="col-12 mb-1 text-center">
-        <img class="ialogo img-fluid" src="iaplatform/logo/logo.png" alt="" />
-      </div>
-
-      <div class="col-12 mb-4 progress-container"></div>
-
-      <div class="col-12 mb-4">
-        <div class="row d-flex align-items-center m,b">
-          <span class="description-section step-counter">Paso 1 de 4</span>
-
-          <div class="col-sm-12 d-flex align-items-center gap-2">
-            <div class="col progress" role="progressbar" aria-label="Basic example" aria-valuenow="100"
-              aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-bar" style="width: 0%"></div>
-            </div>
-
-            <span class="progress-percentage description-section" style="text-align: right">0%</span>
-          </div>
-          <div class="col-sm-12">
-            <h1 class="name-section">Datos de inicio de sesión</h1>
-            <span class="description-section">Introduce aqui una contraseña y acepta los términos</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 mb-4">
-        <h2 class="name-input mb-3">
-          Contraseña <span style="color: red">*</span>
-        </h2>
-
-        <div class="row">
-          <div class="col-12 mb-2">
-            <input type="password" class="form-control" name="password" id="password" />
-     
-            <label for="password" class="form-text">Tu contraseña debe contener 1 mayúscula, 1 carácter especial, 1
-              dígito, minúsculas y una longitud minima de 8 caracteres
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 mb-4">
-        <h2 class="name-input mb-3">
-          Confirmar contraseña <span style="color: red">*</span>
-        </h2>
-
-        <div class="row">
-          <div class="col-12 mb-2">
-            <input type="password" class="form-control" name="repeat_password" id="repeat_password" />
-
-            <label for="repeat_password" class="form-text">Repite la contraseña anterior
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 d-flex gap-3">
-        <input class="form-check-input" type="checkbox" value="accept_terms" id="accept_terms" name="accept_terms" />
-        <label class="form-check-label description-section" for="accept_terms" style="float: left">
-          Si leí el aviso de privacidad y la protección de mis datos
-          personales de
-          <a href="https://www.inadet.com.mx/wp-content/uploads/2020/07/AVISO_PRIVACIDAD-inadet.pdf">Inadel</a>
-          e <a href="https://www.ia.center/aviso-de-privacidad/">IA Center</a>
-        </label>
-      </div>
-
-      <div class="col-12 my-5 d-flex justify-content-between">
-        <button type="button" class="btn btn-secondary previous">
-          Regresar
-        </button>
-        <button type="submit" class="btn btn-primary">Crear cuenta</button>
-      </div>
-    </fieldset>
-  </form>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-    crossorigin="anonymous"></script>
-
-  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-    crossorigin="anonymous"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-
-  <script src="script.js"></script>
-</body>
-
+        <script src="${static.url('js/iaplatform/create_account_page.js')}"></script>
+    </body>
 </html>
